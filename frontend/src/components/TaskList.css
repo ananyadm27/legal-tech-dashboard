@@ -1,0 +1,134 @@
+.task-list {
+    padding: 24px;
+}
+
+.section-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 20px;
+}
+
+.section-header h3 {
+    font-size: 18px;
+    margin: 0;
+}
+
+.view-all {
+    background: transparent;
+    border: none;
+    color: var(--accent-primary);
+    font-size: 14px;
+    font-weight: 500;
+    cursor: pointer;
+}
+
+.view-all:hover {
+    text-decoration: underline;
+}
+
+.tasks-container {
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+}
+
+.task-item {
+    display: flex;
+    background: var(--bg-color-surface);
+    border-radius: var(--border-radius-md);
+    overflow: hidden;
+    transition: transform 0.2s ease, background 0.2s ease;
+}
+
+.task-item:hover {
+    transform: translateX(4px);
+    background: var(--bg-color-surface-hover);
+}
+
+.task-priority {
+    width: 4px;
+    flex-shrink: 0;
+}
+
+.task-details {
+    padding: 16px;
+    flex-grow: 1;
+}
+
+.task-title-row {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    margin-bottom: 8px;
+}
+
+.task-title-row h4 {
+    margin: 0;
+    font-size: 15px;
+    color: var(--text-primary);
+}
+
+.task-badge {
+    font-size: 11px;
+    padding: 4px 8px;
+    border-radius: 12px;
+    font-weight: 600;
+    text-transform: uppercase;
+}
+
+.task-badge.completed {
+    background: rgba(16, 185, 129, 0.15);
+    color: var(--accent-secondary);
+}
+
+.task-badge.in-progress {
+    background: rgba(59, 130, 246, 0.15);
+    color: var(--accent-primary);
+}
+
+.task-badge.not-started {
+    background: rgba(156, 163, 175, 0.15);
+    color: var(--text-secondary);
+}
+
+.task-meta {
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+    font-size: 13px;
+    color: var(--text-secondary);
+}
+
+.case-name,
+.due-date {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+}
+
+.due-date.overdue {
+    color: var(--accent-danger);
+}
+
+/* simple modal styling used in TaskList */
+.modal-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: rgba(0,0,0,0.4);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    z-index: 1000;
+}
+
+.modal-content {
+    background: var(--bg-color-surface);
+    padding: 24px;
+    border-radius: var(--border-radius-md);
+    width: 320px;
+    max-width: 90%;
+}
