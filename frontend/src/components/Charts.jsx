@@ -18,31 +18,49 @@ const Charts = ({ chartsData }) => {
         return null;
     };
 
+    // combine document and task status distributions into one array
+    const combinedMap = {};
+    if (chartsData.docStatusDist) {
+        chartsData.docStatusDist.forEach(({ name, value }) => {
+            combinedMap[name] = (combinedMap[name] || 0) + value;
+        });
+    }
+    if (chartsData.taskStatusDist) {
+        chartsData.taskStatusDist.forEach(({ name, value }) => {
+            combinedMap[name] = (combinedMap[name] || 0) + value;
+        });
+    }
+    const combinedDist = Object.entries(combinedMap).map(([name, value]) => ({ name, value }));
+
     return (
         <div className="charts-container">
-            {/* Document Status Pie Chart */}
+            {/* Combined Status Pie Chart */}
             <div className="chart-card glass-panel">
-                <h3>Document Status Distribution</h3>
+                <h3>Overall Status Distribution</h3>
                 <div className="chart-wrapper">
-                    <ResponsiveContainer width="100%" height={250}>
-                        <PieChart>
-                            <Pie
-                                data={chartsData.docStatusDist}
-                                innerRadius={60}
-                                outerRadius={80}
-                                paddingAngle={5}
-                                dataKey="value"
-                                stroke="none"
-                            >
-                                {chartsData.docStatusDist.map((entry, index) => (
-                                    <Cell key={`cell-${index}`} fill={COLORS[index % COLORS.length]} />
-                                ))}
-                            </Pie>
-                            <Tooltip content={<CustomTooltip />} />
-                        </PieChart>
-                    </ResponsiveContainer>
+                    {combinedDist && combinedDist.length > 0 ? (
+                        <ResponsiveContainer width="100%" height={250}>
+                            <PieChart>
+                                <Pie
+                                    data={combinedDist}
+                                    innerRadius={60}
+                                    outerRadius={80}
+                                    paddingAngle={5}
+                                    dataKey="value"
+                                    stroke="none"
+                                >
+                                    {combinedDist.map((entry, index) => (
+                                        <Cell key={`cell-combined-${index}`} fill={COLORS[index % COLORS.length]} />
+                                    ))}
+                                </Pie>
+                                <Tooltip content={<CustomTooltip />} />
+                            </PieChart>
+                        </ResponsiveContainer>
+                    ) : (
+                        <div className="no-data-message">No status data available</div>
+                    )}
                     <div className="chart-legend">
-                        {chartsData.docStatusDist.map((entry, index) => (
+                        {combinedDist.map((entry, index) => (
                             <div key={index} className="legend-item">
                                 <span className="legend-color" style={{ backgroundColor: COLORS[index % COLORS.length] }}></span>
                                 <span>{entry.name} ({entry.value})</span>
